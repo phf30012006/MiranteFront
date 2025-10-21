@@ -14,6 +14,8 @@ import {
   Typography,
 } from "@mui/material"
 import { NavLink } from "react-router-dom"
+import "@fontsource/montserrat/600.css"
+import "@fontsource/open-sans/400.css"
 
 export default function CadastroPage() {
   return (
@@ -23,46 +25,228 @@ export default function CadastroPage() {
       <main className="flex flex-1 items-center justify-center bg-card py-12">
         <div className="container mx-auto px-4">
           <div className="mx-auto">
-            <Card sx={{ maxWidth: 420, mx: 'auto', borderRadius: 2, boxShadow: 6, bgcolor: 'background.paper' }}>
+            <Card sx={{ maxWidth: 460, mx: 'auto', borderRadius: 2, boxShadow: 6, bgcolor: 'background.paper', fontFamily: 'Montserrat, "Open Sans", Inter, sans-serif' }}>
               <CardContent>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, py: 2 }}>
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
                     <span className="text-xl font-bold text-primary-foreground">M</span>
                   </div>
-                  <Typography variant="h5" component="h1" sx={{ mt: 1, fontWeight: 700 }}>Criar Conta</Typography>
-                  <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>Cadastre-se para acessar a plataforma Mirante da Sustentabilidade</Typography>
+                  <Typography variant="h5" component="h1" sx={{ mt: 1, fontWeight: 700, fontFamily: 'Montserrat, "Open Sans", Inter, sans-serif' }}>Criar Conta</Typography>
+                  <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1, font: '"Open Sans"' }}>Cadastre-se para acessar a plataforma Mirante da Sustentabilidade</Typography>
                 </Box>
 
-                <Box component="form" noValidate autoComplete="off" sx={{ display: 'grid', gap: 2, mt: 2 }}>
-                  <TextField id="name" label="Nome Completo" variant="outlined" fullWidth required size="small" />
-                  <TextField id="email" label="E-mail" variant="outlined" fullWidth required type="email" size="small" />
+                <Box
+                  component="form"
+                  noValidate
+                  autoComplete="off"
+                  sx={{ display: "grid", gap: 2, mt: 2 }}
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 200, marginBottom: -1 }}
+                    className="text-label"
+                  >
+                    Nome Completo
+                  </Typography>
+                  <TextField
+                    id="name"
+                    placeholder="Seu nome completo"
+                    fullWidth
+                    required
+                    size="small"
+                    InputProps={{
+                      sx: {
+                        borderRadius: 1.25,
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#d1d5db", 
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#B70002",
+                        },
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#B70002", 
+                        },
+                      },
+                    }}
+                  />
 
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 200, marginBottom: -1 }}
+                    className="text-label"
+                  >
+                    E-mail
+                  </Typography>
+                  <TextField
+                    id="email"
+                    placeholder="seu@email.com"
+                    variant="outlined"
+                    fullWidth
+                    required
+                    type="email"
+                    size="small"
+                    InputProps={{
+                      sx: {
+                        borderRadius: 1.25,
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#d1d5db",
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#B70002",
+                        },
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#B70002",
+                        },
+                      },
+                    }}
+                  />
+
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 200, marginBottom: -1 }}
+                    className="text-label"
+                  >
+                    Tipo de Perfil
+                  </Typography>
                   <FormControl fullWidth size="small">
-                    <InputLabel id="profile-type-label">Tipo de Perfil</InputLabel>
-                    <Select labelId="profile-type-label" id="profile-type" label="Tipo de Perfil" defaultValue="">
-                      <MenuItem value="">Selecione</MenuItem>
-                      <MenuItem value="secretaria">Secretaria Municipal</MenuItem>
-                      <MenuItem value="pesquisador">Pesquisador</MenuItem>
-                      <MenuItem value="cidadao">Cidadão</MenuItem>
+                    <Select
+                      id="profile-type"
+                      displayEmpty
+                      defaultValue=""
+                      renderValue={(selected) =>
+                        selected ? selected : "Selecione seu perfil"
+                      }
+                      sx={{
+                        borderRadius: 1.25,
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#d1d5db",
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#B70002",
+                        },
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#B70002",
+                        },
+                      }}
+                    >
+                      <MenuItem value="Gestor Público">Gestor Público</MenuItem>
+                      <MenuItem value="Pesquisador">Pesquisador</MenuItem>
+                      <MenuItem value="Cidadão">Cidadão</MenuItem>
                     </Select>
                   </FormControl>
 
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 200, marginBottom: -1 }}
+                    className="text-label"
+                  >
+                    Município
+                  </Typography>
                   <FormControl fullWidth size="small">
-                    <InputLabel id="municipality-label">Município</InputLabel>
-                    <Select labelId="municipality-label" id="municipality" label="Município" defaultValue="">
+                    <Select
+                      displayEmpty
+                      defaultValue=""
+                      renderValue={(selected) =>
+                        selected ? selected : "Selecione seu município"
+                      }
+                      sx={{
+                        borderRadius: 1.25,
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#d1d5db",
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#B70002",
+                        },
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#B70002",
+                        },
+                      }}
+                    >
                       <MenuItem value="">Selecione</MenuItem>
-                      <MenuItem value="sp">São Paulo</MenuItem>
-                      <MenuItem value="campinas">Campinas</MenuItem>
-                      <MenuItem value="santos">Santos</MenuItem>
-                      <MenuItem value="ribeirao">Ribeirão Preto</MenuItem>
-                      <MenuItem value="sorocaba">Sorocaba</MenuItem>
+                      <MenuItem value="São Paulo">São Paulo</MenuItem>
+                      <MenuItem value="Campinas">Campinas</MenuItem>
+                      <MenuItem value="Santos">Santos</MenuItem>
+                      <MenuItem value="Ribeirao">Ribeirão Preto</MenuItem>
+                      <MenuItem value="Sorocaba">Sorocaba</MenuItem>
                     </Select>
                   </FormControl>
 
-                  <TextField id="password" label="Senha" variant="outlined" fullWidth required type="password" size="small" />
-                  <TextField id="confirm-password" label="Confirmar Senha" variant="outlined" fullWidth required type="password" size="small" />
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 200, marginBottom: -1 }}
+                    className="text-label"
+                  >
+                    Senha
+                  </Typography>
+                  <TextField
+                    id="password"
+                    placeholder="••••••••"
+                    variant="outlined"
+                    fullWidth
+                    required
+                    type="password"
+                    size="small"
+                    InputProps={{
+                      sx: {
+                        borderRadius: 1.25,
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#d1d5db",
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#B70002",
+                        },
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#B70002",
+                        },
+                      },
+                    }}
+                  />
 
-                  <Button type="submit" sx={{ backgroundColor: '#D32F2F', color: 'white', textTransform: 'none' }} color="" asChild>
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 200, marginBottom: -1 }}
+                    className="text-label"
+                  >
+                    Confirmar Senha
+                  </Typography>
+                  <TextField
+                    id="confirm-password"
+                    placeholder="••••••••"
+                    variant="outlined"
+                    fullWidth
+                    required
+                    type="password"
+                    size="small"
+                    InputProps={{
+                      sx: {
+                        borderRadius: 1.25,
+                        "& .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#d1d5db",
+                        },
+                        "&:hover .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#B70002",
+                        },
+                        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "#B70002",
+                        },
+                      },
+                    }}
+                  />
+
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    fullWidth
+                    sx={{
+                      mt: 1.5,
+                      borderRadius: 2,
+                      backgroundColor: "#B70002",
+                      textTransform: "none",
+                      "&:hover": {
+                        backgroundColor: "#990002",
+                      },
+                    }}
+                  >
                     Criar Conta
                   </Button>
                 </Box>

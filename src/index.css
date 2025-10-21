@@ -1,6 +1,7 @@
 @import "@fontsource/inter";
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@fontsource/open-sans/400.css";
 
 
 :root {
@@ -16,6 +17,7 @@
   --secondary-foreground: oklch(0.25 0 0);
   --muted: oklch(0.96 0 0);
   --muted-foreground: oklch(0.55 0 0);
+  --label: oklch(0.112 0 0);
   --accent: oklch(0.65 0.15 145); /* Green #4CAF50 */
   --accent-foreground: oklch(1 0 0);
   --destructive: oklch(0.48 0.21 27);
@@ -140,4 +142,16 @@ html, body {
     font-family: "Inter", var(--font-sans);
     font-weight: 700;
   }
+}
+
+input,
+textarea,
+select,
+.MuiInputBase-root,
+.MuiInputBase-input,
+.MuiTextField-root,
+.MuiSelect-root,
+.MuiMenuItem-root,
+.MuiListItemText-root {
+  font-family: "Open Sans", Inter, sans-serif;
 }
