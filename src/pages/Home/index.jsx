@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { Header } from "../../components/header"
 import { Footer } from "../../components/footer"
 import { Box, Button } from "@mui/material"
@@ -6,7 +7,7 @@ import { Badge } from "@mui/material"
 import { Link, NavLink } from "react-router-dom"
 import { MapPin, TrendingUp, FileText, BarChart3, ArrowRight, Target, Users, Building2, Newspaper } from "lucide-react"
 import { Leaf } from "lucide-react"
-
+import { api } from "../../services/api"
 export default function HomePage() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -281,7 +282,7 @@ export default function HomePage() {
                   <p className="text-sm text-muted-foreground mt-2">Conheça as iniciativas sustentáveis da sua cidade e região</p>
                 </div>
                 <CardContent className="p-0 mt-9">
-                  <NavLink to="/mapa" className="block w-full rounded-lg bg-white py-3 text-center text-sm font-medium border border-secondary shadow-sm hover:shadow-md">
+                  <NavLink to="/acoes" className="block w-full rounded-lg bg-white py-3 text-center text-sm font-medium border border-secondary shadow-sm hover:shadow-md">
                     Explorar Ações
                   </NavLink>
                 </CardContent>

@@ -1,6 +1,7 @@
 import { Header } from "../../components/header"
 import { Footer } from "../../components/footer"
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -10,14 +11,100 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Snackbar,
   MenuItem,
   Typography,
 } from "@mui/material"
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import "@fontsource/montserrat/600.css"
 import "@fontsource/open-sans/400.css"
+import { api } from "../../services/api"
+import { useState, useEffect } from "react"
+import { CircularProgress } from "@mui/material"
 
 export default function CadastroPage() {
+  const navigate = useNavigate()
+  const [openSnackbar, setOpenSnasckbar] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const [snackbarKey, setSnackbarKey] = useState(0)
+  const [municipios, setMunicipios] = useState([])
+  const [formData, setFormData] = useState({
+    nome: "",
+    email: "",
+    tipo_perfil: "",
+    municipio_id: "",
+    senha: "",
+    confirmarSenha: ""
+  })
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === "clickaway") return
+    setOpenSnasckbar(false)
+    setError("")
+  };
+
+  const showError = (msg) => {
+    setSnackbarKey(Date.now())
+    setError(msg)
+    setOpenSnasckbar(true)
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError("")
+
+    if (!formData.nome || !formData.email || !formData.tipo_perfil || !formData.municipio_id || !formData.senha) {
+      showError("Por favor, preencha todos os campos")
+      return
+    }
+
+    if (formData.senha !== formData.confirmarSenha) {
+      showError("As senhas não coincidem")
+      return
+    }
+
+    try {
+      setLoading(true)
+      const response = await api.post("/auth/register", {
+        nome: formData.nome,
+        email: formData.email,
+        tipo_perfil: formData.tipo_perfil,
+        municipio_id: Number(formData.municipio_id),
+        senha: formData.senha
+      })
+
+      if (response.status === 200) {
+        navigate("/login")
+      }
+    } catch (err) {
+      showError(err.response?.data?.message || "Erro ao criar conta. Tente novamente.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const buscarMunicipios = async () => {
+    try {
+      const response = await api.get("/municipios/")
+      setMunicipios(response.data)
+    } catch (error) {
+      console.error("Erro ao buscar municípios:", error)
+    }
+  }
+
+  useEffect(() => {
+    buscarMunicipios()
+  }, [])
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -38,9 +125,21 @@ export default function CadastroPage() {
                 <Box
                   component="form"
                   noValidate
+                  onSubmit={handleSubmit}
                   autoComplete="off"
                   sx={{ display: "grid", gap: 2, mt: 2 }}
                 >
+                  <Snackbar
+                    key={snackbarKey}
+                    open={openSnackbar}
+                    autoHideDuration={3000}
+                    onClose={handleCloseSnackbar}
+                    anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                  >
+                    <Alert severity="error" onClose={handleCloseSnackbar} sx={{ width: "100%" }}>
+                      {error}
+                    </Alert>
+                  </Snackbar>
                   <Typography
                     variant="body2"
                     sx={{ fontWeight: 200, marginBottom: -1 }}
@@ -50,10 +149,13 @@ export default function CadastroPage() {
                   </Typography>
                   <TextField
                     id="name"
+                    name="nome"
                     placeholder="Seu nome completo"
                     fullWidth
                     required
                     size="small"
+                    value={formData.nome}
+                    onChange={handleChange}
                     InputProps={{
                       sx: {
                         borderRadius: 1.25,
@@ -79,12 +181,15 @@ export default function CadastroPage() {
                   </Typography>
                   <TextField
                     id="email"
+                    name="email"
                     placeholder="seu@email.com"
                     variant="outlined"
                     fullWidth
                     required
                     type="email"
                     size="small"
+                    value={formData.email}
+                    onChange={handleChange}
                     InputProps={{
                       sx: {
                         borderRadius: 1.25,
@@ -110,9 +215,11 @@ export default function CadastroPage() {
                   </Typography>
                   <FormControl fullWidth size="small">
                     <Select
-                      id="profile-type"
+                      id="tipo_perfil"
+                      name="tipo_perfil"
                       displayEmpty
-                      defaultValue=""
+                      value={formData.tipo_perfil}
+                      onChange={handleChange}
                       renderValue={(selected) =>
                         selected ? selected : "Selecione seu perfil"
                       }
@@ -129,9 +236,10 @@ export default function CadastroPage() {
                         },
                       }}
                     >
-                      <MenuItem value="Gestor Público">Gestor Público</MenuItem>
-                      <MenuItem value="Pesquisador">Pesquisador</MenuItem>
-                      <MenuItem value="Cidadão">Cidadão</MenuItem>
+                      <MenuItem value="admin">Administrador</MenuItem>
+                      <MenuItem value="gestor público">Gestor Público</MenuItem>
+                      <MenuItem value="pesquisador">Pesquisador</MenuItem>
+                      <MenuItem value="cidadão">Cidadão</MenuItem>
                     </Select>
                   </FormControl>
 
@@ -144,11 +252,16 @@ export default function CadastroPage() {
                   </Typography>
                   <FormControl fullWidth size="small">
                     <Select
+                      id="municipio_id"
+                      name="municipio_id"
                       displayEmpty
-                      defaultValue=""
-                      renderValue={(selected) =>
-                        selected ? selected : "Selecione seu município"
-                      }
+                      value={formData.municipio_id}
+                      onChange={handleChange}
+                      renderValue={(selected) => {
+                        if (!selected) return "Selecione seu município";
+                        const municipioSelecionado = municipios.find(m => m.id === selected);
+                        return municipioSelecionado ? municipioSelecionado.nome : "";
+                      }}
                       sx={{
                         borderRadius: 1.25,
                         "& .MuiOutlinedInput-notchedOutline": {
@@ -163,11 +276,11 @@ export default function CadastroPage() {
                       }}
                     >
                       <MenuItem value="">Selecione</MenuItem>
-                      <MenuItem value="São Paulo">São Paulo</MenuItem>
-                      <MenuItem value="Campinas">Campinas</MenuItem>
-                      <MenuItem value="Santos">Santos</MenuItem>
-                      <MenuItem value="Ribeirao">Ribeirão Preto</MenuItem>
-                      <MenuItem value="Sorocaba">Sorocaba</MenuItem>
+                      {municipios.map(municipio => (
+                        <MenuItem key={municipio.id} value={municipio.id}>
+                          {municipio.nome}
+                        </MenuItem>
+                      ))}
                     </Select>
                   </FormControl>
 
@@ -180,12 +293,15 @@ export default function CadastroPage() {
                   </Typography>
                   <TextField
                     id="password"
+                    name="senha"
                     placeholder="••••••••"
                     variant="outlined"
                     fullWidth
                     required
                     type="password"
                     size="small"
+                    value={formData.senha}
+                    onChange={handleChange}
                     InputProps={{
                       sx: {
                         borderRadius: 1.25,
@@ -211,12 +327,15 @@ export default function CadastroPage() {
                   </Typography>
                   <TextField
                     id="confirm-password"
+                    name="confirmarSenha"
                     placeholder="••••••••"
                     variant="outlined"
                     fullWidth
                     required
                     type="password"
                     size="small"
+                    value={formData.confirmarSenha}
+                    onChange={handleChange}
                     InputProps={{
                       sx: {
                         borderRadius: 1.25,
@@ -247,7 +366,7 @@ export default function CadastroPage() {
                       },
                     }}
                   >
-                    Criar Conta
+                    {loading ? <CircularProgress size={24} color="inherit" /> : "Criar Conta"}
                   </Button>
                 </Box>
 
