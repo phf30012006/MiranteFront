@@ -3,6 +3,7 @@ import HomePage from "./pages/Home"
 import CadastroPage from "./pages/Cadastro"
 import LoginPage from "./pages/Login"
 import NotFoundPage from "./pages/NotFound"
+import { AuthProvider } from "./contexts/AuthContext"
 // import MapaPage from "./pages/Mapa"
 // import AcoesPage from "./pages/Acoes"
 // import AcaoDetalhesPage from "./pages/AcaoDetalhes"
@@ -13,19 +14,21 @@ import NotFoundPage from "./pages/NotFound"
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/cadastro" element={<CadastroPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      {/* <Route path="/mapa" element={<MapaPage />} />
-      <Route path="/acoes" element={<AcoesPage />} />
-      <Route path="/acoes/:id" element={<AcaoDetalhesPage />} />
-      <Route path="/nova-acao" element={<NovaAcaoPage />} />
-      <Route path="/indicadores" element={<IndicadoresPage />} />
-      <Route path="/noticias" element={<NoticiasPage />} />
-      <Route path="/admin" element={<AdminPage />} /> */}
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/cadastro" element={<CadastroPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        {/* <Route path="/mapa" element={<MapaPage />} />
+        <Route path="/acoes" element={<AcoesPage />} />
+        <Route path="/acoes/:id" element={<AcaoDetalhesPage />} />
+        <Route path="/nova-acao" element={<NovaAcaoPage />} />
+        <Route path="/indicadores" element={<IndicadoresPage />} />
+        <Route path="/noticias" element={<NoticiasPage />} />
+        <Route path="/admin" element={<AdminPage />} /> */}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </AuthProvider>
   )
 }
 

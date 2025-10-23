@@ -4,9 +4,12 @@ import { Button } from "@mui/material"
 import { Menu, X } from "lucide-react"
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
+import { useAuth } from "../contexts/AuthContext"
+import { Button as MuiButton } from "@mui/material"
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { user, logout } = useAuth()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -45,12 +48,23 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
-          <Button sx={{ ':hover': { backgroundColor: '#4CAF50', color: 'white', }, textTransform: 'none', fontWeight: 500 }} color="" asChild>
-            <NavLink to="/login"> Entrar</NavLink>
-          </Button>
-          <Button sx={{ backgroundColor: '#D32F2F', color: 'white', textTransform: 'none' }} color="" asChild>
-            <NavLink to="/cadastro">Cadastrar</NavLink>
-          </Button>
+          {user ? (
+            <div className="flex items-center gap-4">
+              <span className="text-sm">Olá, {user.nome}</span>
+              <Button sx={{ backgroundColor: '#D32F2F', color: 'white', textTransform: 'none' }} onClick={logout} >
+                Sair
+              </Button>
+            </div>
+          ) : (
+            <>
+              <Button sx={{ ':hover': { backgroundColor: '#4CAF50', color: 'white', }, textTransform: 'none', fontWeight: 500 }} color="" asChild>
+                <NavLink to="/login"> Entrar</NavLink>
+              </Button>
+              <Button sx={{ backgroundColor: '#D32F2F', color: 'white', textTransform: 'none' }} color="" asChild>
+                <NavLink to="/cadastro">Cadastrar</NavLink>
+              </Button>
+            </>
+          )}
         </div>
 
         <button className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
@@ -77,12 +91,21 @@ export function Header() {
               Sobre
             </Link>
             <div className="flex flex-col gap-2 pt-4">
-              <Button variant="ghost" asChild>
-                <Link href="/login">Entrar</Link>
-              </Button>
-              <Button asChild>
-                <Link href="/cadastro">Cadastrar</Link>
-              </Button>
+              {user ? (
+                <>
+                  <div className="px-2 py-2">Olá, {user.nome}</div>
+                  <Button onClick={logout}>Sair</Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="ghost" asChild>
+                    <Link href="/login">Entrar</Link>
+                  </Button>
+                  <Button asChild>
+                    <Link href="/cadastro">Cadastrar</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </nav>
         </div>

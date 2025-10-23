@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Header } from "../../components/header"
 import { Footer } from "../../components/footer"
 import { Box, Button } from "@mui/material"
@@ -7,8 +7,20 @@ import { Badge } from "@mui/material"
 import { Link, NavLink } from "react-router-dom"
 import { MapPin, TrendingUp, FileText, BarChart3, ArrowRight, Target, Users, Building2, Newspaper } from "lucide-react"
 import { Leaf } from "lucide-react"
-import { api } from "../../services/api"
+import { getHomeData } from "./actions"
+
 export default function HomePage() {
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getHomeData()
+      .then(d => setData(d))
+      .catch(err => console.error('Erro ao buscar dados da home:', err))
+      .finally(() => setLoading(false))
+  }, [])
+
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -62,15 +74,15 @@ export default function HomePage() {
           <div className="container mx-auto px-4">
             <div className="grid gap-8 md:grid-cols-3">
               <div className="text-center">
-                <div className="mb-2 font-heading text-4xl font-bold text-primary">645</div>
+                <div className="mb-2 font-heading text-4xl font-bold text-primary">{loading ? '—' : (data?.qtd_municipios ?? 0)}</div>
                 <div className="text-sm text-muted-foreground">Municípios Cadastrados</div>
               </div>
               <div className="text-center">
-                <div className="mb-2 font-heading text-4xl font-bold text-primary">2.847</div>
+                <div className="mb-2 font-heading text-4xl font-bold text-primary">{loading ? '—' : (data?.qtd_acoes ?? 0)}</div>
                 <div className="text-sm text-muted-foreground">Ações Sustentáveis</div>
               </div>
               <div className="text-center">
-                <div className="mb-2 font-heading text-4xl font-bold text-primary">17</div>
+                <div className="mb-2 font-heading text-4xl font-bold text-primary">{loading ? '—' : (data?.qtd_ods ?? 0)}</div>
                 <div className="text-sm text-muted-foreground">Objetivos ODS</div>
               </div>
             </div>
@@ -161,14 +173,11 @@ export default function HomePage() {
                 </div>
                 <CardContent className="p-0">
                   <ul className="space-y-4 mb-8">
-                    <li>
-                      <p className="text-sm font-medium leading-relaxed">Campinas inaugura maior parque solar municipal</p>
-                      <span className="text-xs text-muted-foreground">Há 2 dias</span>
-                    </li>
-                    <li>
-                      <p className="text-sm font-medium leading-relaxed">São Paulo amplia rede de ciclovias em 50km</p>
-                      <span className="text-xs text-muted-foreground">Há 4 dias</span>
-                    </li>
+                    {data?.ultimas_noticias?.map((n, idx) => (
+                      <li key={idx}>
+                        <p className="text-sm font-medium leading-relaxed">{n}</p>
+                      </li>
+                    ))}
                   </ul>
                   <div className="flex justify-center">
                     <NavLink to="/noticias" className="inline-flex items-center justify-center px-8 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 text-base font-medium">

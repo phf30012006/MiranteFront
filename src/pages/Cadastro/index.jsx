@@ -40,10 +40,7 @@ export default function CadastroPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
+    setFormData(prev => ({ ...prev, [name]: value }))
   }
 
   const handleCloseSnackbar = (event, reason) => {
