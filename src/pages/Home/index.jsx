@@ -47,7 +47,7 @@ export default function HomePage() {
                 Acompanhe as iniciativas de sustentabilidade nos municípios paulistas
               </h1>
               <p className="mb-8 text-lg text-primary-foreground/90 leading-relaxed text-pretty">
-                O Mirante da Sustentabilidade é uma plataforma do Governo do Estado de São Paulo para organizar,
+                O Mirante da Sustentabilidade é uma plataforma do Estado de São Paulo para organizar,
                 integrar e divulgar informações sobre ações sustentáveis baseadas nos ODS.
               </p>
               <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">

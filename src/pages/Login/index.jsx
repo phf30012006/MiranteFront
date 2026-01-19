@@ -100,7 +100,7 @@ export default function LoginPage() {
               <CardContent>
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, py: 2 }}>
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                    <span className="text-xl font-bold text-primary-foreground">M</span>
+                    <span className="text-lg font-bold text-primary-foreground">MS</span>
                   </div>
                   <Typography variant="h5" component="h1" sx={{ mt: 1, fontWeight: 700, fontFamily: 'Montserrat, "Open Sans", Inter, sans-serif' }}>Bem-vindo de volta</Typography>
                   <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1, font: '"Open Sans"' }}>Entre com suas credenciais para acessar a plataforma</Typography>

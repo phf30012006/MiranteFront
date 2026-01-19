@@ -10,7 +10,7 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                <span className="text-xl font-bold text-primary-foreground">M</span>
+                <span className="text-lg font-bold text-primary-foreground">MS</span>
               </div>
               <div className="flex flex-col">
                 <span className="font-heading text-base font-bold leading-tight">Mirante da Sustentabilidade</span>
@@ -108,7 +108,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-12 border-t border-white/10 pt-8 text-center text-sm text-white/80">
-          <p>© 2025 Governo do Estado de São Paulo. Todos os direitos reservados.</p>
+          <p>© 2025 Estado de São Paulo. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>
