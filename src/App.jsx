@@ -10,7 +10,7 @@ import { AuthProvider } from "./contexts/AuthContext"
 import AcaoDetalhesPage from "./pages/AcaoDetalhes"
 import CadastroAcoesPage from "./pages/CadastroAcoes"
 // import IndicadoresPage from "./pages/Indicadores"
-// import NoticiasPage from "./pages/Noticias"
+import NoticiasPage from "./pages/Noticias"
 // import AdminPage from "./pages/Admin"
 
 function App() {
@@ -23,10 +23,10 @@ function App() {
         <Route path="/acoes" element={<AcoesPage />} />
         <Route path="/cadastro-acoes" element={<CadastroAcoesPage />} />
         <Route path="/acoes/:id" element={<AcaoDetalhesPage />} />
+        <Route path="/noticias" element={<NoticiasPage />} />
         {/* <Route path="/mapa" element={<MapaPage />} />
         <Route path="/nova-acao" element={<NovaAcaoPage />} />
         <Route path="/indicadores" element={<IndicadoresPage />} />
-        <Route path="/noticias" element={<NoticiasPage />} />
         <Route path="/admin" element={<AdminPage />} /> */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

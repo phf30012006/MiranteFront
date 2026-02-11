@@ -25,22 +25,22 @@ export function Footer() {
             <h3 className="mb-4 font-heading text-sm font-bold text-white">Navegação</h3>
             <ul className="space-y-3 text-sm">
               <li>
-                <NavLink to="/mapa" className="text-white/80 transition-colors hover:text-white">
+                <NavLink to="/mapa" className="text-white/80 transition-colors hover:text-primary">
                   Mapa Interativo
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/acoes" className="text-white/80 transition-colors hover:text-white">
+                <NavLink to="/acoes" className="text-white/80 transition-colors hover:text-primary">
                   Ações
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/indicadores" className="text-white/80 transition-colors hover:text-white">
+                <NavLink to="/indicadores" className="text-white/80 transition-colors hover:text-primary">
                   Indicadores
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/noticias" className="text-white/80 transition-colors hover:text-white">
+                <NavLink to="/noticias" className="text-white/80 transition-colors hover:text-primary">
                   Notícias
                 </NavLink>
               </li>
@@ -51,22 +51,22 @@ export function Footer() {
             <h3 className="mb-4 font-heading text-sm font-bold text-white">Institucional</h3>
             <ul className="space-y-3 text-sm">
               <li>
-                <NavLink to="/sobre" className="text-white/80 transition-colors hover:text-white">
+                <NavLink to="/sobre" className="text-white/80 transition-colors hover:text-primary">
                   Sobre o Projeto
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/ods" className="text-white/80 transition-colors hover:text-white">
+                <NavLink to="/ods" className="text-white/80 transition-colors hover:text-primary">
                   Objetivos ODS
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/contato" className="text-white/80 transition-colors hover:text-white">
+                <NavLink to="/contato" className="text-white/80 transition-colors hover:text-primary">
                   Contato
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/privacidade" className="text-white/80 transition-colors hover:text-white">
+                <NavLink to="/privacidade" className="text-white/80 transition-colors hover:text-primary">
                   Política de Privacidade
                 </NavLink>
               </li>

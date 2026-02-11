@@ -8,9 +8,14 @@ const MyTabs = styled(Tabs)(() => ({
   borderRadius: 12,
   padding: 6,
   minHeight: "auto",
+  gap: 4,
 
   "& .MuiTabs-indicator": {
     display: "none", 
+  },
+
+  "& .MuiTabs-flexContainer": {
+    gap: 4,
   },
 }));
 
@@ -21,7 +26,7 @@ const MyTab = styled(Tab)(() => ({
   fontWeight: 400,
   color: "#333",
   minHeight: "auto",
-  padding: "8px 24px",
+  padding: "8px 22px",
   borderRadius: 10,
   transition: "all 0.2s ease",
 

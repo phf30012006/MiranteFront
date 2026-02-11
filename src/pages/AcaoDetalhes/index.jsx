@@ -74,6 +74,29 @@ export default function AcaoDetalhesPage() {
   const odsLabels = acao.ods?.map(o => typeof o === 'object' ? { numero: o.numero, nome: o.nome } : { numero: o, nome: '' }) || []
   const municipioNome = typeof acao.municipio === 'object' ? acao.municipio?.nome : acao.municipio || ''
 
+  const getOdsColor = (numero) => {
+    const colors = {
+      1: '#E5243B',
+      2: '#DDA63A',
+      3: '#4C9F38',
+      4: '#C5192D',
+      5: '#FF3A21',
+      6: '#26BDE2',
+      7: '#FCC30B',
+      8: '#A21942',
+      9: '#FD6925',
+      10: '#DD1367',
+      11: '#FD9D24',
+      12: '#BF8B2E',
+      13: '#3F7E44',
+      14: '#0A97D9',
+      15: '#56C02B',
+      16: '#00689D',
+      17: '#19486A',
+    }
+    return colors[numero] || '#4CAF50'
+  }
+
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Header />
@@ -84,7 +107,7 @@ export default function AcaoDetalhesPage() {
             <Button
               startIcon={<ArrowLeft size={16} />}
               onClick={() => navigate("/acoes")}
-              sx={{ mb: 1, px: 0, textTransform: "none", color: "text.secondary", fontFamily: 'Inter, sans-serif' }}
+              sx={{ mb: 1, px: 1.5, py: 0.5, textTransform: "none", color: "text.secondary", fontFamily: 'Inter, sans-serif', "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" } }}
             >
               Voltar para Ações
             </Button>
@@ -134,8 +157,8 @@ export default function AcaoDetalhesPage() {
               {odsLabels.map((ods, index) => (
                 <Badge
                   key={index}
-                  className="px-3 py-1 rounded-full bg-accent text-accent-foreground"
-                  sx={{ fontFamily: 'Inter, sans-serif' }}
+                  className="px-3 py-1 rounded-full text-white"
+                  sx={{ fontFamily: 'Inter, sans-serif', backgroundColor: getOdsColor(ods.numero) }}
                 >
                   ODS {ods.numero}{ods.nome ? ` - ${ods.nome}` : ''}
                 </Badge>

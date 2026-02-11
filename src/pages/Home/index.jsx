@@ -8,16 +8,23 @@ import { Link, NavLink } from "react-router-dom"
 import { MapPin, TrendingUp, FileText, BarChart3, ArrowRight, Target, Users, Building2, Newspaper } from "lucide-react"
 import { Leaf } from "lucide-react"
 import { getHomeData } from "./actions"
+import { getNoticias } from "../Noticias/actions"
 
 export default function HomePage() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [noticias, setNoticias] = useState([])
 
   useEffect(() => {
     getHomeData()
       .then(d => setData(d))
       .catch(err => console.error('Erro ao buscar dados da home:', err))
       .finally(() => setLoading(false))
+    getNoticias()
+      .then(noticias => {
+        setNoticias(noticias)
+      })
+      .catch(err => console.error('Erro ao buscar notícias:', err))
   }, [])
 
 
@@ -164,20 +171,24 @@ export default function HomePage() {
               </Card>
 
               <Card className="rounded-xl p-6 shadow-sm bg-card transition-shadow hover:shadow-lg">
-                <div className="mb-4">
+                <div className="mb-2">
                   <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     <Newspaper className="h-6 w-6" />
                   </div>
                   <h2 className="text-2xl font-heading font-bold">Notícias Sustentáveis</h2>
                   <p className="text-sm text-muted-foreground mt-1">Últimas novidades sobre sustentabilidade no estado</p>
                 </div>
-                <CardContent className="p-0">
+                <CardContent>
                   <ul className="space-y-4 mb-8">
-                    {data?.ultimas_noticias?.map((n, idx) => (
-                      <li key={idx}>
-                        <p className="text-sm font-medium leading-relaxed">{n}</p>
-                      </li>
-                    ))}
+                    {noticias.slice(0, 2).map((n, idx) => {
+                      const diasAtras = Math.floor((new Date() - new Date(n.data_publicacao)) / (1000 * 60 * 60 * 24))
+                      return (
+                        <li key={idx}>
+                          <p className="text-sm font-semibold">{n.titulo}</p>
+                          <p className="text-xs text-muted-foreground">Há {diasAtras} {diasAtras === 1 ? 'dia' : 'dias'}</p>
+                        </li>
+                      )
+                    })}
                   </ul>
                   <div className="flex justify-center">
                     <NavLink to="/noticias" className="inline-flex items-center justify-center px-8 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 text-base font-medium">
