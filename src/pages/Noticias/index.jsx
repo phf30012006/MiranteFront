@@ -38,13 +38,15 @@ export default function NoticiasPage() {
     })
   }
 
-  const filteredNoticias = noticias.filter((noticia) => {
-    const matchesSearch =
-      noticia.titulo?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      noticia.municipio?.nome?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      noticia.conteudo_integral?.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesSearch
-  })
+  const filteredNoticias = noticias
+    .filter((noticia) => {
+      const matchesSearch =
+        noticia.titulo?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        noticia.municipio?.nome?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        noticia.conteudo_integral?.toLowerCase().includes(searchQuery.toLowerCase())
+      return matchesSearch
+    })
+    .sort((a, b) => new Date(b.data_publicacao) - new Date(a.data_publicacao))
 
   const noticiasParaGrid = filteredNoticias.slice(1)
   const totalPages = Math.ceil(noticiasParaGrid.length / itemsPerPage)

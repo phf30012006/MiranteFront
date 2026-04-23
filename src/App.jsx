@@ -11,6 +11,9 @@ import AcaoDetalhesPage from "./pages/AcaoDetalhes"
 import CadastroAcoesPage from "./pages/CadastroAcoes"
 // import IndicadoresPage from "./pages/Indicadores"
 import NoticiasPage from "./pages/Noticias"
+import ForumPage from "./pages/Forum"
+import RecursosPage from "./pages/Recursos"
+import MetodologiaPage from "./pages/Metodologia"
 // import AdminPage from "./pages/Admin"
 
 function App() {
@@ -24,6 +27,9 @@ function App() {
         <Route path="/cadastro-acoes" element={<CadastroAcoesPage />} />
         <Route path="/acoes/:id" element={<AcaoDetalhesPage />} />
         <Route path="/noticias" element={<NoticiasPage />} />
+        <Route path="/forum" element={<ForumPage />} />
+        <Route path="/recursos" element={<RecursosPage />} />
+        <Route path="/metodologia" element={<MetodologiaPage />} />
         {/* <Route path="/mapa" element={<MapaPage />} />
         <Route path="/nova-acao" element={<NovaAcaoPage />} />
         <Route path="/indicadores" element={<IndicadoresPage />} />

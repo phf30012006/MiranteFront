@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Header } from "../../components/header"
 import { Footer } from "../../components/footer"
 import { Box, Button } from "@mui/material"
 import { Card, CardContent, CardActions } from "@mui/material"
 import { Badge } from "@mui/material"
 import { Link, NavLink } from "react-router-dom"
-import { MapPin, TrendingUp, FileText, BarChart3, ArrowRight, Target, Users, Building2, Newspaper } from "lucide-react"
+import { MapPin, TrendingUp, FileText, BarChart3, ArrowRight, Target, Users, Building2, Newspaper, Search } from "lucide-react"
 import { Leaf } from "lucide-react"
 import { getHomeData } from "./actions"
 import { getNoticias } from "../Noticias/actions"
@@ -14,6 +15,8 @@ export default function HomePage() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [noticias, setNoticias] = useState([])
+  const [busca, setBusca] = useState("")
+  const navigate = useNavigate()
 
   useEffect(() => {
     getHomeData()
@@ -22,7 +25,8 @@ export default function HomePage() {
       .finally(() => setLoading(false))
     getNoticias()
       .then(noticias => {
-        setNoticias(noticias)
+        const sorted = [...noticias].sort((a, b) => new Date(b.data_publicacao) - new Date(a.data_publicacao))
+        setNoticias(sorted)
       })
       .catch(err => console.error('Erro ao buscar notícias:', err))
   }, [])
@@ -33,49 +37,75 @@ export default function HomePage() {
       <Header />
 
       <main className="flex-1">
-        <section className="relative overflow-hidden bg-gradient-to-br from-foreground via-foreground to-foreground/90 py-24 text-primary-foreground">
-          <div className="absolute inset-0 opacity-10">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `url('/abstract-map-of-sao-paulo-state-topographic-lines.jpg')`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
+      <section className="relative overflow-hidden bg-slate-50 py-16 text-slate-900">
+        <div className="absolute inset-0 opacity-[0.2] mix-blend-multiply grayscale">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url('/teste.jpg')`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+        </div>
+
+        {/* Barra de busca — canto superior direito, abaixo de Entrar/Cadastrar */}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            if (busca.trim()) navigate(`/acoes?q=${encodeURIComponent(busca.trim())}`)
+          }}
+          className="absolute top-4 right-4 hidden md:flex items-center gap-2 w-96 z-10"
+        >
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <input
+              type="text"
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+              placeholder="Buscar ações, municípios, ODS..."
+              className="w-full rounded-lg border border-slate-300 bg-white/90 backdrop-blur-sm py-2 pl-10 pr-4 text-sm text-slate-900 shadow-sm outline-none focus:ring-2 focus:ring-primary/40"
             />
           </div>
-          <div className="container relative mx-auto px-4">
-            <div className="mx-auto max-w-3xl text-center">
-              <Badge className="mb-6 bg-accent text-accent-foreground rounded-md px-2 py-1 inline-flex items-center" variant="secondary">
-                <Leaf className="mr-2 h-4 w-4" />
-                Objetivos de Desenvolvimento Sustentável
-              </Badge>
-              <h1 className="mb-6 font-heading text-5xl font-bold leading-tight text-balance md:text-6xl">
-                Acompanhe as iniciativas de sustentabilidade nos municípios paulistas
-              </h1>
-              <p className="mb-8 text-lg text-primary-foreground/90 leading-relaxed text-pretty">
-                O Mirante da Sustentabilidade é uma plataforma do Estado de São Paulo para organizar,
-                integrar e divulgar informações sobre ações sustentáveis baseadas nos ODS.
-              </p>
-              <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <NavLink
-                  to="/mapa"
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 text-md font-medium"
-                >
-                  Explorar Mapa
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </NavLink>
+          <button
+            type="submit"
+            className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 whitespace-nowrap"
+          >
+            Buscar
+          </button>
+        </form>
 
-                <NavLink
-                  to="/sobre"
-                  className="inline-flex items-center justify-center px-6 py-3 rounded-md border border-primary-foreground/20 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 text-md font-medium"
-                >
-                  Saiba Mais
-                </NavLink>
-              </div>
+        <div className="container relative mx-auto px-4">
+          <div className="mx-auto max-w-3xl text-center">
+            <Badge className="mb-6 inline-flex items-center rounded-md bg-accent px-2 py-1 text-accent-foreground" variant="secondary">
+              <Leaf className="mr-2 h-4 w-4" />
+              Objetivos de Desenvolvimento Sustentável
+            </Badge>
+            <h1 className="mb-6 text-balance font-heading text-5xl font-bold leading-tight md:text-6xl">
+              Acompanhe as iniciativas de sustentabilidade nos municípios paulistas
+            </h1>
+            <p className="mb-8 text-pretty text-lg leading-relaxed text-black">
+              O Mirante da Sustentabilidade é uma plataforma que conecta e dá visibilidade às ações sustentáveis nos municípios do Estado de São Paulo, promovendo a organização e a integração de informações alinhadas aos Objetivos de Desenvolvimento Sustentável (ODS).
+            </p>
+            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <NavLink
+                to="/mapa"
+                className="text-md inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 font-medium text-primary-foreground hover:bg-primary/90"
+              >
+                Explorar Mapa
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </NavLink>
+
+              <NavLink
+                to="/sobre"
+                className="text-md inline-flex items-center justify-center rounded-md border border-slate-300 bg-slate-100 px-6 py-3 font-medium text-slate-900 hover:bg-slate-200"
+              >
+                Saiba Mais
+              </NavLink>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
         <section className="border-b border-border bg-card py-12">
           <div className="container mx-auto px-4">
@@ -238,17 +268,17 @@ export default function HomePage() {
                   </li>
                 </ul>
                 <div className="flex justify-flex-start">
-                    <NavLink to="/mapa" className="inline-flex items-center justify-center px-8 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 text-base font-medium">
-                      Acessar Mapa Completo
-                      <ArrowRight className="ml-3 h-4 w-4" />
-                    </NavLink>
-                  </div>
+                  <NavLink to="/mapa" className="inline-flex items-center justify-center px-8 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary/90 text-base font-medium">
+                    Acessar Mapa Completo
+                    <ArrowRight className="ml-3 h-4 w-4" />
+                  </NavLink>
+                </div>
               </div>
-              <div className="relative aspect-square overflow-hidden rounded-lg border border-border bg-muted">
+              <div className="relative w-full overflow-hidden rounded-lg border border-border bg-white shadow-sm">
                 <img
-                  src="/stylized-map-of-sao-paulo-state-with-data-points.jpg"
+                  src="/mapa_novo.jpeg"
                   alt="Mapa do Estado de São Paulo"
-                  className="h-full w-full "
+                  className="h-auto w-full object-contain mix-blend-multiply"
                 />
               </div>
             </div>

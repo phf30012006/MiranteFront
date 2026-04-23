@@ -108,7 +108,10 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-12 border-t border-white/10 pt-8 text-center text-sm text-white/80">
-          <p>© 2025 Estado de São Paulo. Todos os direitos reservados.</p>
+          <p>© Desenvolvimento: Laboratório Avançado de Pesquisa - Inteligência Artificial (Ibict / Unimar)</p>
+          <p className="mt-2">Laboratório de Informação para Sustentabilidade (LIS) - COTEA/Ibict</p>
+          <p className="mt-2">Instituto Brasileiro de Informação em Ciência e Tecnologia (Ibict)</p>
+          <p className="mt-2">Unidade de Pesquisa do Ministério de Ciência, Tecnologia e Inovação (MCTI)</p>
         </div>
       </div>
     </footer>

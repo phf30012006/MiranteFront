@@ -6,6 +6,26 @@ import { NavLink } from "react-router-dom"
 import { Search, MapPin, Calendar, ExternalLink, Leaf, Droplet, Wind, Recycle, Plus } from "lucide-react"
 import { getAcoes } from "./actions"
 
+const odsColors = {
+  1: '#E5243B',
+  2: '#DDA63A',
+  3: '#4C9F38',
+  4: '#C5192D',
+  5: '#FF3A21',
+  6: '#26BDE2',
+  7: '#FCC30B',
+  8: '#A21942',
+  9: '#FD6925',
+  10: '#DD1367',
+  11: '#FD9D24',
+  12: '#BF8B2E',
+  13: '#3F7E44',
+  14: '#0A97D9',
+  15: '#56C02B',
+  16: '#00689D',
+  17: '#19486A',
+}
+
 const iconMap = {
   "Energia Renovável": Wind,
   "Gestão de Resíduos": Recycle,
@@ -138,7 +158,11 @@ export default function AcoesPage() {
                 const temaObj = action.temas?.[0]
                 const themeName = typeof temaObj === 'object' ? temaObj?.nome : temaObj || "Meio Ambiente"
                 const Icon = iconMap[themeName] || Leaf
-                const odsLabels = action.ods?.map(o => typeof o === 'object' ? `ODS ${o.numero} - ${o.nome}` : o) || []
+                const odsList = action.ods?.map(o => {
+                  if (typeof o === 'object') return { numero: o.numero, label: `ODS ${o.numero}` }
+                  const match = String(o).match(/ODS\s*(\d+)/)
+                  return { numero: match ? parseInt(match[1]) : null, label: match ? `ODS ${match[1]}` : o }
+                }) || []
                 return (
                   <Card key={action.id} className="group !rounded-xl p-6 shadow-sm hover:shadow-lg transition-shadow">
                     <div className="mb-4">
@@ -146,7 +170,7 @@ export default function AcoesPage() {
                         <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-accent/10 text-accent">
                           <Icon className="h-6 w-6" />
                         </div>
-                        <Badge className="px-3 py-1 rounded-full bg-accent text-accent-foreground">
+                        <Badge className="px-3 py-1 rounded-full bg-gray-100 text-gray-700">
                           {themeName}
                         </Badge>
                       </div>
@@ -167,13 +191,14 @@ export default function AcoesPage() {
                       </div>
 
                       <div className="flex flex-wrap gap-2">
-                        {odsLabels.map((ods, index) => (
-                          <Badge
+                        {odsList.map((ods, index) => (
+                          <span
                             key={index}
-                            className="px-2 py-1 bg-background text-xs"
+                            className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium text-white"
+                            style={{ backgroundColor: odsColors[ods.numero] || '#6b7280' }}
                           >
-                            {ods}
-                          </Badge>
+                            {ods.label}
+                          </span>
                         ))}
                       </div>
 

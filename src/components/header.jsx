@@ -28,11 +28,14 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
-          <NavLink to="/mapa" className="text-sm font-medium text-foreground transition-colors hover:text-primary" style={{ textDecoration:"none" }}>
-            Mapa
+          <NavLink to="/sobre" className="text-sm font-medium text-foreground transition-colors hover:text-primary" style={{ textDecoration:"none" }}>
+            Sobre
           </NavLink>
           <NavLink to="/acoes" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
             Ações
+          </NavLink>
+          <NavLink to="/forum" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
+            Fórum
           </NavLink>
           <NavLink
             to="/indicadores"
@@ -40,11 +43,17 @@ export function Header() {
           >
             Indicadores
           </NavLink>
+          <NavLink to="/mapa" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
+            Mapa
+          </NavLink>
+          <NavLink to="/metodologia" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
+            Metodologia
+          </NavLink>
+          <NavLink to="/recursos" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
+            Recursos
+          </NavLink>
           <NavLink to="/noticias" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
             Notícias
-          </NavLink>
-          <NavLink to="/sobre" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
-            Sobre
           </NavLink>
         </nav>
 
@@ -76,20 +85,29 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="border-t border-border bg-background md:hidden">
           <nav className="container mx-auto flex flex-col gap-4 px-4 py-6">
-            <Link href="/mapa" className="text-sm font-medium text-foreground">
-              Mapa
+            <Link href="/sobre" className="text-sm font-medium text-foreground">
+              Sobre
             </Link>
             <Link href="/acoes" className="text-sm font-medium text-foreground">
               Ações
             </Link>
+            <NavLink to="/forum" className="text-sm font-medium text-foreground" style={{ textDecoration: 'none' }}>
+              Fórum
+            </NavLink>
             <Link href="/indicadores" className="text-sm font-medium text-foreground">
               Indicadores
             </Link>
+            <Link href="/mapa" className="text-sm font-medium text-foreground">
+              Mapa
+            </Link>
+            <NavLink to="/metodologia" className="text-sm font-medium text-foreground" style={{ textDecoration: 'none' }}>
+              Metodologia
+            </NavLink>
+            <NavLink to="/recursos" className="text-sm font-medium text-foreground" style={{ textDecoration: 'none' }}>
+              Recursos
+            </NavLink>
             <Link href="/noticias" className="text-sm font-medium text-foreground">
               Notícias
-            </Link>
-            <Link href="/sobre" className="text-sm font-medium text-foreground">
-              Sobre
             </Link>
             <div className="flex flex-col gap-2 pt-4">
               {user ? (

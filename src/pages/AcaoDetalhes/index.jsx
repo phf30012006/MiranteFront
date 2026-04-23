@@ -121,7 +121,7 @@ export default function AcaoDetalhesPage() {
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                     <Building2 size={16} />
                     <Typography variant="body2" sx={{ fontFamily: 'Inter, sans-serif' }}>
-                      {acao.nome_organizacao} ({acao.sigla_organizacao})
+                      {acao.nome_organizacao}
                     </Typography>
                   </Box>
                   <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
