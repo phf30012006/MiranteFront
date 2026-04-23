@@ -1,17 +1,23 @@
 import { useState, useEffect } from "react"
 import { Header } from "../../components/header"
 import { Footer } from "../../components/footer"
-import { Box, Button, Card, CardContent, Typography, InputBase, CircularProgress } from "@mui/material"
+import { Box, Button, Card, CardContent, Typography, CircularProgress } from "@mui/material"
 import { NavLink } from "react-router-dom"
-import { Calendar, MapPin, Search, ArrowRight } from "lucide-react"
+import { Calendar, MapPin, ArrowRight } from "lucide-react"
 import { getNoticias } from "./actions"
+import FilterPanel from "../../components/FilterPanel"
 
 export default function NoticiasPage() {
   const [noticias, setNoticias] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [searchQuery, setSearchQuery] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 6
+  const [filters, setFilters] = useState({
+    nome: "",
+    municipio: "",
+    ods: "",
+    data: ""
+  })
 
   useEffect(() => {
     async function loadNoticias() {
@@ -38,12 +44,48 @@ export default function NoticiasPage() {
     })
   }
 
+  const handleFilter = (newFilters) => {
+    setFilters(newFilters)
+    setCurrentPage(1) // Reset para a primeira página ao filtrar
+  }
+
+  const handleClearFilter = (clearedFilters) => {
+    setFilters(clearedFilters)
+    setCurrentPage(1)
+  }
+
   const filteredNoticias = noticias.filter((noticia) => {
-    const matchesSearch =
-      noticia.titulo?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      noticia.municipio?.nome?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      noticia.conteudo_integral?.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesSearch
+    // Filtro por nome/título
+    if (filters.nome && !noticia.titulo?.toLowerCase().includes(filters.nome.toLowerCase())) {
+      return false
+    }
+
+    // Filtro por município
+    if (filters.municipio && filters.municipio !== "Todos") {
+      const municipioLabel = noticia.municipio ? `${noticia.municipio.nome} - ${noticia.municipio.uf}` : ""
+      if (municipioLabel !== filters.municipio) {
+        return false
+      }
+    }
+
+    // Filtro por ODS (se as notícias tiverem campo ODS)
+    if (filters.ods && filters.ods !== "Todos") {
+      const hasODS = noticia.ods?.some(ods => {
+        const odsLabel = typeof ods === 'object' ? `ODS ${ods.numero} - ${ods.nome}` : ods
+        return odsLabel === filters.ods
+      })
+      if (!hasODS) return false
+    }
+
+    // Filtro por data
+    if (filters.data && noticia.data_publicacao) {
+      const noticiaDate = new Date(noticia.data_publicacao + 'T12:00:00').toISOString().split('T')[0]
+      if (noticiaDate !== filters.data) {
+        return false
+      }
+    }
+
+    return true
   })
 
   const noticiasParaGrid = filteredNoticias.slice(1)
@@ -73,32 +115,11 @@ export default function NoticiasPage() {
         </Box>
 
         <Box sx={{ maxWidth: "1600px", mx: "auto", px: 4, py: 4 }}>
-          <Card sx={{ mb: 4, p: 2 }}>
-            <Box sx={{ display: "flex", flexDirection: { xs: "column", md: "row" }, gap: 2 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  flex: 1,
-                  bgcolor: "grey.100",
-                  borderRadius: 1,
-                  px: 2,
-                  py: 1,
-                }}
-              >
-                <Search size={20} style={{ color: "#666", marginRight: 8 }} />
-                <InputBase
-                  placeholder="Buscar notícias por título, município ou tema..."
-                  sx={{ flex: 1 }}
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </Box>
-              <Button variant="contained" sx={{ backgroundColor: "#B70002", "&:hover": { backgroundColor: "#990002" }, fontFamily: 'Inter, sans-serif' }}>
-                Buscar
-              </Button>
-            </Box>
-          </Card>
+          <FilterPanel
+            onFilter={handleFilter}
+            onClearFilter={handleClearFilter}
+            showDateFilter={true}
+          />
 
           {isLoading ? (
             <Box sx={{ display: "flex", justifyContent: "center", py: 8 }}>

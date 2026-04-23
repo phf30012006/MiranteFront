@@ -5,8 +5,7 @@ import LoginPage from "./pages/Login"
 import AcoesPage from "./pages/Acoes"
 import NotFoundPage from "./pages/NotFound"
 import { AuthProvider } from "./contexts/AuthContext"
-// import MapaPage from "./pages/Mapa"
-// import AcoesPage from "./pages/Acoes"
+import MapaPage from "./pages/Mapa"
 import AcaoDetalhesPage from "./pages/AcaoDetalhes"
 import CadastroAcoesPage from "./pages/CadastroAcoes"
 // import IndicadoresPage from "./pages/Indicadores"
@@ -24,8 +23,8 @@ function App() {
         <Route path="/cadastro-acoes" element={<CadastroAcoesPage />} />
         <Route path="/acoes/:id" element={<AcaoDetalhesPage />} />
         <Route path="/noticias" element={<NoticiasPage />} />
-        {/* <Route path="/mapa" element={<MapaPage />} />
-        <Route path="/nova-acao" element={<NovaAcaoPage />} />
+        <Route path="/mapa" element={<MapaPage />} />
+        {/* <Route path="/nova-acao" element={<NovaAcaoPage />} />
         <Route path="/indicadores" element={<IndicadoresPage />} />
         <Route path="/admin" element={<AdminPage />} /> */}
         <Route path="*" element={<NotFoundPage />} />
