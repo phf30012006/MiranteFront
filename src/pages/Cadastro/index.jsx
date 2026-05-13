@@ -71,7 +71,7 @@ export default function CadastroPage() {
 
     try {
       setLoading(true)
-      const response = await api.post("/auth/register", {
+      const response = await api.post("/auth/register/", {
         nome: formData.nome,
         email: formData.email,
         tipo_perfil: formData.tipo_perfil,

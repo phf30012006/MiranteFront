@@ -62,7 +62,7 @@ export default function LoginPage() {
       params.append("username", form.email)
       params.append("password", form.senha)
 
-      const resp = await api.post("/auth/login", params.toString(), {
+      const resp = await api.post("/auth/login/", params.toString(), {
         headers: { "Content-Type": "application/x-www-form-urlencoded" }
       })
 

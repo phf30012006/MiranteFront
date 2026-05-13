@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
   const loadUser = async (token) => {
     try {
       if (token) api.defaults.headers.common['Authorization'] = `Bearer ${token}`
-      const resp = await api.get('/me')
+      const resp = await api.get('/me/')
       setUser(resp.data)
     } catch (err) {
       console.error('Erro ao buscar /me', err)

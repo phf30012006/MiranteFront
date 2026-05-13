@@ -22,7 +22,7 @@ export const getMunicipioDetalhes = async (id) => {
 
 export const getAcoesPorMunicipio = async (municipioId) => {
   try {
-    const response = await api.get(`/acoes/?municipio_id=${municipioId}`);
+    const response = await api.get(`/acoes/?municipio_id=${municipioId}/`);
     return response.data;
   } catch (error) {
     console.error("Erro ao buscar ações do município:", error);

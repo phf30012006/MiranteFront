@@ -17,7 +17,7 @@ export default function FilterPanel({ onFilter, onClearFilter, showDateFilter = 
   useEffect(() => {
     async function loadOds() {
       try {
-        const response = await api.get("/ods")
+        const response = await api.get("/ods/")
         const odsData = response.data.map(ods => ({
           id: ods.id,
           label: `ODS ${ods.numero} - ${ods.nome}`
@@ -31,7 +31,7 @@ export default function FilterPanel({ onFilter, onClearFilter, showDateFilter = 
 
     async function loadMunicipios() {
       try {
-        const response = await api.get("/municipios")
+        const response = await api.get("/municipios/")
         const municipioData = response.data.map(mun => ({
           id: mun.id,
           label: `${mun.nome} - ${mun.uf}`

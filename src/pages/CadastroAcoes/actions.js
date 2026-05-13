@@ -1,17 +1,17 @@
 import { api } from "../../services/api";
 
 export async function getMunicipios() {
-  const resp = await api.get("/municipios");
+  const resp = await api.get("/municipios/");
   return resp.data;
 }
 
 export async function getOds() {
-  const resp = await api.get("/ods");
+  const resp = await api.get("/ods/");
   return resp.data;
 }
 
 export async function getTemas() {
-  const resp = await api.get("/temas");
+  const resp = await api.get("/temas/");
   return resp.data;
 }
 
@@ -62,7 +62,7 @@ export async function cadastrarAcao(data) {
     ods_ids: data.ods_ids,
   };
 
-  const resp = await api.post("/acoes", payload);
+  const resp = await api.post("/acoes/", payload);
   return resp.data;
 }
 
@@ -72,6 +72,6 @@ export async function cadastrarTema(data) {
     descricao: data.descricao || "",
   };
 
-  const resp = await api.post("/temas", payload);
+  const resp = await api.post("/temas/", payload);
   return resp.data;
 }
