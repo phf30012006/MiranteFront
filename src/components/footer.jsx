@@ -57,7 +57,7 @@ export function Footer() {
               </li>
               <li>
                 <NavLink to="/ods" className="text-white/80 transition-colors hover:text-primary">
-                  Objetivos ODS
+                  ODS
                 </NavLink>
               </li>
               <li>

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react"
 import { Header } from "../../components/header"
 import { Footer } from "../../components/footer"
-import { Box, Button, Card, CardContent, Badge, InputBase } from "@mui/material"
+import { Box, Button, Card, CardContent, Badge } from "@mui/material"
 import { NavLink } from "react-router-dom"
-import { Search, MapPin, Calendar, ExternalLink, Leaf, Droplet, Wind, Recycle, Plus } from "lucide-react"
+import { MapPin, Calendar, ExternalLink, Leaf, Droplet, Wind, Recycle, Plus } from "lucide-react"
 import { getAcoes } from "./actions"
+import FilterPanel from "../../components/FilterPanel"
 
 const iconMap = {
   "Energia Renovável": Wind,
@@ -25,10 +26,14 @@ const iconMap = {
 }
 
 export default function AcoesPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedTheme, setSelectedTheme] = useState("Todos")
   const [actions, setActions] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [filters, setFilters] = useState({
+    nome: "",
+    municipio: "",
+    ods: "",
+    data: ""
+  })
 
   useEffect(() => {
     async function loadAcoes() {
@@ -45,14 +50,47 @@ export default function AcoesPage() {
     loadAcoes()
   }, [])
 
-  const themes = [
-    "Todos",
-    "Energia Renovável",
-    "Gestão de Resíduos",
-    "Recursos Hídricos",
-    "Mobilidade Urbana",
-    "Áreas Verdes",
-  ]
+  const handleFilter = (newFilters) => {
+    setFilters(newFilters)
+  }
+
+  const handleClearFilter = (clearedFilters) => {
+    setFilters(clearedFilters)
+  }
+
+  const filteredActions = actions.filter((action) => {
+    // Filtro por nome
+    if (filters.nome && !action.titulo?.toLowerCase().includes(filters.nome.toLowerCase())) {
+      return false
+    }
+
+    // Filtro por município
+    if (filters.municipio && filters.municipio !== "Todos") {
+      const municipioLabel = action.municipio ? `${action.municipio.nome} - ${action.municipio.uf}` : ""
+      if (municipioLabel !== filters.municipio) {
+        return false
+      }
+    }
+
+    // Filtro por ODS
+    if (filters.ods && filters.ods !== "Todos") {
+      const hasODS = action.ods?.some(ods => {
+        const odsLabel = typeof ods === 'object' ? `ODS ${ods.numero} - ${ods.nome}` : ods
+        return odsLabel === filters.ods
+      })
+      if (!hasODS) return false
+    }
+
+    // Filtro por data
+    if (filters.data && action.data_inicio) {
+      const actionDate = new Date(action.data_inicio).toISOString().split('T')[0]
+      if (actionDate !== filters.data) {
+        return false
+      }
+    }
+
+    return true
+  })
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -80,61 +118,23 @@ export default function AcoesPage() {
         </div>
 
         <div className="container mx-auto px-4 py-8">
-          <Card className="mb-8 !rounded-xl">
-            <CardContent className="p-6">
-              <div className="flex flex-col gap-4 md:flex-row">
-                <Box className="relative flex-1">
-                  <InputBase
-                    placeholder="Buscar ações por título, município ou tema..."
-                    className="w-full rounded-md border border-border bg-background px-5 py-2"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                  />
-                </Box>
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: 'var(--primary)',
-                    color: 'var(--primary-foreground)',
-                    '&:hover': {
-                      backgroundColor: 'var(--primary)',
-                      opacity: 0.9,
-                    },
-                  }}
-                >
-                  Buscar
-                </Button>
-              </div>
-
-              <div className="mt-4 flex flex-wrap gap-2">
-                {themes.map((theme) => (
-                  <Badge
-                    key={theme}
-                    className={`cursor-pointer px-3 py-1 rounded-full ${
-                      selectedTheme === theme
-                        ? "bg-primary text-primary-foreground"
-                        : "bg-card hover:bg-primary/10"
-                    }`}
-                    onClick={() => setSelectedTheme(theme)}
-                  >
-                    {theme}
-                  </Badge>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          <FilterPanel
+            onFilter={handleFilter}
+            onClearFilter={handleClearFilter}
+            showDateFilter={true}
+          />
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {isLoading ? (
               <div className="col-span-full text-center py-8 text-muted-foreground">
                 Carregando ações...
               </div>
-            ) : actions.length === 0 ? (
+            ) : filteredActions.length === 0 ? (
               <div className="col-span-full text-center py-8 text-muted-foreground">
                 Nenhuma ação encontrada.
               </div>
             ) : (
-              actions.map((action) => {
+              filteredActions.map((action) => {
                 const temaObj = action.temas?.[0]
                 const themeName = typeof temaObj === 'object' ? temaObj?.nome : temaObj || "Meio Ambiente"
                 const Icon = iconMap[themeName] || Leaf
