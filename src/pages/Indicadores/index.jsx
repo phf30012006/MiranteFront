@@ -139,8 +139,7 @@ export default function IndicadoresPage() {
                 </p>
                 <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
                   Escala de 0 a 100%. Base de <strong>277 legislações</strong> levantadas até junho de 2026. O IMN não
-                  penaliza ausências setoriais — lacunas em ENE (energia) e MOB (mobilidade) são sinalizadas
-                  separadamente pelo MHN (F5).
+                  penaliza ausências setoriais.
                 </p>
               </div>
               <div className="flex flex-col justify-center rounded-xl border border-primary/30 bg-gradient-to-br from-primary/5 to-transparent p-5 text-center shadow-sm">
@@ -215,7 +214,7 @@ export default function IndicadoresPage() {
 
             <p className="mt-6 max-w-3xl text-xs italic leading-relaxed text-muted-foreground">
               Fonte: Levantamento Mirante da Sustentabilidade, IBICT — base junho 2026 (277 legislações). O IMN não
-              penaliza ausências setoriais — lacunas em ENE e MOB são sinalizadas pelo MHN (F5). ENE
+              penaliza ausências setoriais. ENE
               <Check className="mx-0.5 inline h-3 w-3 text-emerald-600" strokeWidth={3} />/ MOB
               <Check className="mx-0.5 inline h-3 w-3 text-emerald-600" strokeWidth={3} /> = presença normativa no
               setor.
