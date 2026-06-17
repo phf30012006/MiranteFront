@@ -17,6 +17,10 @@ const MyTabs = styled(Tabs)(() => ({
   "& .MuiTabs-flexContainer": {
     gap: 4,
   },
+
+  "& .MuiTabs-scrollButtons.Mui-disabled": {
+    opacity: 0.3,
+  },
 }));
 
 const MyTab = styled(Tab)(() => ({
@@ -44,7 +48,13 @@ const MyTab = styled(Tab)(() => ({
 
 export default function CustomTabs({ value, onChange }) {
   return (
-    <MyTabs value={value} onChange={onChange}>
+    <MyTabs
+      value={value}
+      onChange={onChange}
+      variant="scrollable"
+      scrollButtons="auto"
+      allowScrollButtonsMobile
+    >
       <MyTab label="Informações Gerais" value="geral" />
       <MyTab label="Organização" value="organizacao" />
       <MyTab label="Resultados e Impacto" value="resultados" />

@@ -65,6 +65,18 @@ const TOPICOS_MOCK = [
 
 const TAGS = ["Todos", "Resíduos", "Energia", "Água", "Habitação", "Biodiversidade", "Clima", "Outros"]
 
+const TAG_CORES = {
+  Resíduos: { badge: "bg-amber-100 text-amber-800", ativo: "bg-amber-600 text-white", inativo: "bg-amber-50 text-amber-700 hover:bg-amber-100" },
+  Energia: { badge: "bg-yellow-100 text-yellow-800", ativo: "bg-yellow-500 text-white", inativo: "bg-yellow-50 text-yellow-700 hover:bg-yellow-100" },
+  Água: { badge: "bg-sky-100 text-sky-800", ativo: "bg-sky-600 text-white", inativo: "bg-sky-50 text-sky-700 hover:bg-sky-100" },
+  Habitação: { badge: "bg-purple-100 text-purple-800", ativo: "bg-purple-600 text-white", inativo: "bg-purple-50 text-purple-700 hover:bg-purple-100" },
+  Biodiversidade: { badge: "bg-emerald-100 text-emerald-800", ativo: "bg-emerald-600 text-white", inativo: "bg-emerald-50 text-emerald-700 hover:bg-emerald-100" },
+  Clima: { badge: "bg-teal-100 text-teal-800", ativo: "bg-teal-600 text-white", inativo: "bg-teal-50 text-teal-700 hover:bg-teal-100" },
+  Outros: { badge: "bg-slate-100 text-slate-700", ativo: "bg-slate-600 text-white", inativo: "bg-slate-50 text-slate-600 hover:bg-slate-100" },
+}
+
+const corBadge = (tag) => TAG_CORES[tag]?.badge ?? "bg-accent/10 text-accent-foreground"
+
 export default function ForumPage() {
   const { user } = useAuth()
   const [busca, setBusca] = useState("")
@@ -133,20 +145,27 @@ export default function ForumPage() {
 
             {/* Tags */}
             <div className="mb-6 flex flex-wrap gap-2">
-              {TAGS.map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => setTagAtiva(tag)}
-                  className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium transition ${
-                    tagAtiva === tag
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-muted text-muted-foreground hover:bg-muted/80"
-                  }`}
-                >
-                  <Tag className="h-3 w-3" />
-                  {tag}
-                </button>
-              ))}
+              {TAGS.map((tag) => {
+                const cores = TAG_CORES[tag]
+                const ativo = tagAtiva === tag
+                const classe = cores
+                  ? ativo
+                    ? cores.ativo
+                    : cores.inativo
+                  : ativo
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted text-muted-foreground hover:bg-muted/80"
+                return (
+                  <button
+                    key={tag}
+                    onClick={() => setTagAtiva(tag)}
+                    className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium transition ${classe}`}
+                  >
+                    <Tag className="h-3 w-3" />
+                    {tag}
+                  </button>
+                )
+              })}
             </div>
 
             {/* Lista de tópicos */}
@@ -161,7 +180,7 @@ export default function ForumPage() {
                   >
                     <div className="mb-2 flex flex-wrap items-start justify-between gap-2">
                       <div>
-                        <span className="mb-1 inline-block rounded-full bg-accent/10 px-2 py-0.5 text-xs font-medium text-accent-foreground">
+                        <span className={`mb-1 inline-block rounded-full px-2 py-0.5 text-xs font-medium ${corBadge(topico.tag)}`}>
                           {topico.tag}
                         </span>
                         <h2 className="text-base font-semibold text-foreground leading-snug">{topico.titulo}</h2>

@@ -74,6 +74,14 @@ export default function AcaoDetalhesPage() {
   const odsLabels = acao.ods?.map(o => typeof o === 'object' ? { numero: o.numero, nome: o.nome } : { numero: o, nome: '' }) || []
   const municipioNome = typeof acao.municipio === 'object' ? acao.municipio?.nome : acao.municipio || ''
 
+  const cardSx = {
+    bgcolor: "background.paper",
+    border: "1px solid",
+    borderColor: "divider",
+    borderRadius: 2,
+    boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+  }
+
   const getOdsColor = (numero) => {
     const colors = {
       1: '#E5243B',
@@ -101,9 +109,9 @@ export default function AcaoDetalhesPage() {
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       <Header />
 
-      <main style={{ flex: 1 }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider", bgcolor: "action.hover" }}>
-          <Box sx={{ maxWidth: "1400px", mx: "auto", px: 0, py: 2 }}>
+      <main style={{ flex: 1, backgroundColor: "#F7F8FA" }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider", bgcolor: "background.paper" }}>
+          <Box sx={{ maxWidth: "1400px", mx: "auto", px: { xs: 2, md: 0 }, py: 2 }}>
             <Button
               startIcon={<ArrowLeft size={16} />}
               onClick={() => navigate("/acoes")}
@@ -112,9 +120,9 @@ export default function AcaoDetalhesPage() {
               Voltar para Ações
             </Button>
 
-            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 4, flexWrap: "wrap" }}>
-              <Box sx={{ flex: 1 }}>
-                <Typography variant="h4" component="h1" fontWeight="bold" sx={{ mb: 1, fontFamily: 'Inter, sans-serif' }}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: { xs: 2, md: 4 }, flexWrap: "wrap" }}>
+              <Box sx={{ flex: 1, minWidth: { xs: "100%", sm: "auto" } }}>
+                <Typography variant="h4" component="h1" fontWeight="bold" sx={{ mb: 1, fontFamily: 'Inter, sans-serif', fontSize: { xs: "1.5rem", md: "2.125rem" } }}>
                   {acao.titulo}
                 </Typography>
                 <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 2, color: "text.secondary" }}>
@@ -136,11 +144,11 @@ export default function AcaoDetalhesPage() {
                 </Box>
               </Box>
 
-              <Box sx={{ display: "flex", gap: 1 }}>
-                <Button variant="outlined" size="small" startIcon={<FileText size={16} />} sx={{ borderColor: "#B70002", color: "#B70002", "&:hover": { borderColor: "#990002", backgroundColor: "rgba(183, 0, 2, 0.04)" }, fontFamily: 'Inter, sans-serif' }}>
+              <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", width: { xs: "100%", sm: "auto" } }}>
+                <Button variant="outlined" size="small" startIcon={<FileText size={16} />} sx={{ flex: { xs: 1, sm: "none" }, borderColor: "#B70002", color: "#B70002", "&:hover": { borderColor: "#990002", backgroundColor: "rgba(183, 0, 2, 0.04)" }, fontFamily: 'Inter, sans-serif' }}>
                   Relatório
                 </Button>
-                <Button variant="contained" size="small" startIcon={<ExternalLink size={16} />} sx={{ backgroundColor: "#B70002", "&:hover": { backgroundColor: "#990002" }, fontFamily: 'Inter, sans-serif' }} >
+                <Button variant="contained" size="small" startIcon={<ExternalLink size={16} />} sx={{ flex: { xs: 1, sm: "none" }, backgroundColor: "#B70002", "&:hover": { backgroundColor: "#990002" }, fontFamily: 'Inter, sans-serif' }} >
                   Site da Ação
                 </Button>
               </Box>
@@ -148,8 +156,8 @@ export default function AcaoDetalhesPage() {
           </Box>
         </Box>
 
-        <Box sx={{ borderBottom: 1, borderColor: "divider", bgcolor: "action.hover" }}>
-          <Box sx={{ maxWidth: "1400px", mx: "auto", px: 0, py: 2 }}>
+        <Box sx={{ borderBottom: 1, borderColor: "divider", bgcolor: "background.paper" }}>
+          <Box sx={{ maxWidth: "1400px", mx: "auto", px: { xs: 2, md: 0 }, py: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
               <Typography variant="body2" fontWeight={500} color="text.secondary" sx={{ fontFamily: 'Inter, sans-serif' }}>
                 ODS:
@@ -167,8 +175,8 @@ export default function AcaoDetalhesPage() {
           </Box>
         </Box>
 
-        <Box sx={{ maxWidth: "1400px", mx: "auto", px: 1, py: 6 }}>
-          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", lg: "1fr 380px" }, gap: 6 }}>
+        <Box sx={{ maxWidth: "1400px", mx: "auto", px: { xs: 2, md: 1 }, py: { xs: 3, md: 6 } }}>
+          <Box sx={{ display: "grid", gridTemplateColumns: { xs: "1fr", lg: "1fr 380px" }, gap: { xs: 3, lg: 6 } }}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
               <Box>
                 <CustomTabs 
@@ -179,7 +187,7 @@ export default function AcaoDetalhesPage() {
 
                 {activeTab === "geral" && (
                   <Box sx={{ display: "flex", flexDirection: "column", gap: 3, mt: 3 }}>
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, fontFamily: 'Inter, sans-serif' }}>
                           Descrição da Ação
@@ -231,7 +239,7 @@ export default function AcaoDetalhesPage() {
                       </CardContent>
                     </Card>
 
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                           <Target size={20} color="#dc2626" />
@@ -241,7 +249,7 @@ export default function AcaoDetalhesPage() {
                       </CardContent>
                     </Card>
 
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                           <Users size={20} color="#dc2626" />
@@ -251,7 +259,7 @@ export default function AcaoDetalhesPage() {
                       </CardContent>
                     </Card>
 
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, fontFamily: 'Inter, sans-serif' }}>
                           Financiador
@@ -264,7 +272,7 @@ export default function AcaoDetalhesPage() {
 
                 {activeTab === "organizacao" && (
                   <Box sx={{ display: "flex", flexDirection: "column", gap: 3, mt: 3 }}>
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, fontFamily: 'Inter, sans-serif' }}>
                           Informações da Organização
@@ -308,16 +316,16 @@ export default function AcaoDetalhesPage() {
                             </Box>
                           </Box>
 
-                          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                            <Globe size={16} color="#dc2626" />
-                            <a href={acao.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.875rem", color: "#dc2626", textDecoration: "none", fontFamily: 'Inter, sans-serif' }}>
+                          <Box sx={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }}>
+                            <Globe size={16} color="#dc2626" style={{ flexShrink: 0 }} />
+                            <a href={acao.website} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.875rem", color: "#dc2626", textDecoration: "none", fontFamily: 'Inter, sans-serif', minWidth: 0, wordBreak: "break-word" }}>
                               {acao.website}
                             </a>
                           </Box>
 
-                          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                            <Mail size={16} color="#dc2626" />
-                            <a href={`mailto:${acao.email_contato}`} style={{ fontSize: "0.875rem", color: "#dc2626", textDecoration: "none", fontFamily: 'Inter, sans-serif' }}>
+                          <Box sx={{ display: "flex", alignItems: "center", gap: 2, minWidth: 0 }}>
+                            <Mail size={16} color="#dc2626" style={{ flexShrink: 0 }} />
+                            <a href={`mailto:${acao.email_contato}`} style={{ fontSize: "0.875rem", color: "#dc2626", textDecoration: "none", fontFamily: 'Inter, sans-serif', minWidth: 0, wordBreak: "break-word" }}>
                               {acao.email_contato}
                             </a>
                           </Box>
@@ -339,7 +347,7 @@ export default function AcaoDetalhesPage() {
 
                 {activeTab === "resultados" && (
                   <Box sx={{ display: "flex", flexDirection: "column", gap: 3, mt: 3 }}>
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, fontFamily: 'Inter, sans-serif' }}>
                           Resultados Esperados
@@ -348,7 +356,7 @@ export default function AcaoDetalhesPage() {
                       </CardContent>
                     </Card>
 
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Typography variant="h6" fontWeight="bold" color="success.main" sx={{ mb: 2, fontFamily: 'Inter, sans-serif' }}>
                           Resultados Alcançados
@@ -357,7 +365,7 @@ export default function AcaoDetalhesPage() {
                       </CardContent>
                     </Card>
 
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                           <Lightbulb size={20} color="#dc2626" />
@@ -367,7 +375,7 @@ export default function AcaoDetalhesPage() {
                       </CardContent>
                     </Card>
 
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, fontFamily: 'Inter, sans-serif' }}>
                           Indicadores de Impacto
@@ -378,7 +386,7 @@ export default function AcaoDetalhesPage() {
                       </CardContent>
                     </Card>
 
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                           <Award size={20} color="#dc2626" />
@@ -392,7 +400,7 @@ export default function AcaoDetalhesPage() {
 
                 {activeTab === "parcerias" && (
                   <Box sx={{ display: "flex", flexDirection: "column", gap: 3, mt: 3 }}>
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                           <Network size={20} color="#dc2626" />
@@ -419,7 +427,7 @@ export default function AcaoDetalhesPage() {
                       </CardContent>
                     </Card>
 
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, fontFamily: 'Inter, sans-serif' }}>
                           Vínculo com Políticas Públicas
@@ -464,7 +472,7 @@ export default function AcaoDetalhesPage() {
 
                 {activeTab === "complementos" && (
                   <Box sx={{ display: "flex", flexDirection: "column", gap: 3, mt: 3 }}>
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, fontFamily: 'Inter, sans-serif' }}>
                           Tecnologias Utilizadas
@@ -473,7 +481,7 @@ export default function AcaoDetalhesPage() {
                       </CardContent>
                     </Card>
 
-                    <Card sx={{ bgcolor: "action.hover" }}>
+                    <Card sx={cardSx}>
                       <CardContent>
                         <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                           <Database size={20} color="#dc2626" />
@@ -502,10 +510,10 @@ export default function AcaoDetalhesPage() {
                                   href={acao.links_relatorios}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  style={{ fontSize: "0.875rem", color: "#dc2626", textDecoration: "none", display: "flex", alignItems: "center", gap: 4, fontFamily: 'Inter, sans-serif' }}
+                                  style={{ fontSize: "0.875rem", color: "#dc2626", textDecoration: "none", display: "flex", alignItems: "center", gap: 4, fontFamily: 'Inter, sans-serif', wordBreak: "break-word" }}
                                 >
                                   {acao.links_relatorios}
-                                  <ExternalLink size={12} />
+                                  <ExternalLink size={12} style={{ flexShrink: 0 }} />
                                 </a>
                               </Box>
                             </>
@@ -515,7 +523,7 @@ export default function AcaoDetalhesPage() {
                     </Card>
 
                     {acao.observacoes && (
-                      <Card sx={{ bgcolor: "action.hover" }}>
+                      <Card sx={cardSx}>
                         <CardContent>
                           <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, fontFamily: 'Inter, sans-serif' }}>
                             Observações
@@ -530,7 +538,7 @@ export default function AcaoDetalhesPage() {
             </Box>
 
             <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-              <Card sx={{ bgcolor: "action.hover" }}>
+              <Card sx={cardSx}>
                 <CardContent>
                   <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, fontFamily: 'Inter, sans-serif' }}>
                     Resumo
@@ -570,15 +578,15 @@ export default function AcaoDetalhesPage() {
                 </CardContent>
               </Card>
 
-              <Card sx={{ bgcolor: "action.hover" }}>
+              <Card sx={cardSx}>
                 <CardContent>
                   <Typography variant="h6" fontWeight="bold" sx={{ mb: 2, fontFamily: 'Inter, sans-serif' }}>
                     Contato
                   </Typography>
                   <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                      <Mail size={16} color="#525252" />
-                      <a href={`mailto:${acao.email_contato}`} style={{ fontSize: "0.875rem", color: "#dc2626", textDecoration: "none", fontFamily: 'Inter, sans-serif' }}>
+                    <Box sx={{ display: "flex", alignItems: "center", gap: 1, minWidth: 0 }}>
+                      <Mail size={16} color="#525252" style={{ flexShrink: 0 }} />
+                      <a href={`mailto:${acao.email_contato}`} style={{ fontSize: "0.875rem", color: "#dc2626", textDecoration: "none", fontFamily: 'Inter, sans-serif', minWidth: 0, wordBreak: "break-word" }}>
                         {acao.email_contato}
                       </a>
                     </Box>

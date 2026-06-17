@@ -36,7 +36,6 @@ export default function SobrePage() {
       <Header />
 
       <main className="flex-1">
-        {/* Hero */}
         <section className="bg-slate-50 border-b border-border py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl">
@@ -55,7 +54,6 @@ export default function SobrePage() {
           </div>
         </section>
 
-        {/* Motivação */}
         <section className="py-14 border-b border-border">
           <div className="container mx-auto px-4">
             <div className="grid gap-10 lg:grid-cols-2 lg:items-start">
@@ -86,7 +84,6 @@ export default function SobrePage() {
           </div>
         </section>
 
-        {/* Abordagem */}
         <section className="py-14 bg-slate-50">
           <div className="container mx-auto px-4">
             <div className="mb-10 text-center">

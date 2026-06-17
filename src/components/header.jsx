@@ -12,6 +12,11 @@ export function Header() {
   const { user, logout } = useAuth()
   const primeiroNome = user ? user.nome.split(" ")[0] : ""
 
+  const navClass = ({ isActive }) =>
+    `text-sm font-medium transition-colors ${
+      isActive ? "text-red-600" : "text-foreground hover:text-primary"
+    }`
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -28,31 +33,31 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
-          <NavLink to="/sobre" className="text-sm font-medium text-foreground transition-colors hover:text-primary" style={{ textDecoration:"none" }}>
+          <NavLink to="/sobre" className={navClass} style={{ textDecoration:"none" }}>
             Sobre
           </NavLink>
-          <NavLink to="/acoes" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
+          <NavLink to="/acoes" className={navClass}>
             Ações
           </NavLink>
-          <NavLink to="/forum" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
+          <NavLink to="/forum" className={navClass}>
             Fórum
           </NavLink>
           <NavLink
             to="/indicadores"
-            className="text-sm font-medium text-foreground transition-colors hover:text-primary"
+            className={navClass}
           >
             Indicadores
           </NavLink>
-          <NavLink to="/mapa" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
+          <NavLink to="/mapa" className={navClass}>
             Mapa
           </NavLink>
-          <NavLink to="/metodologia" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
+          <NavLink to="/metodologia" className={navClass}>
             Metodologia
           </NavLink>
-          <NavLink to="/recursos" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
+          <NavLink to="/recursos" className={navClass}>
             Recursos
           </NavLink>
-          <NavLink to="/noticias" className="text-sm font-medium text-foreground transition-colors hover:text-primary">
+          <NavLink to="/noticias" className={navClass}>
             Notícias
           </NavLink>
         </nav>
@@ -85,30 +90,30 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="border-t border-border bg-background md:hidden">
           <nav className="container mx-auto flex flex-col gap-4 px-4 py-6">
-            <Link href="/sobre" className="text-sm font-medium text-foreground">
+            <NavLink to="/sobre" className={navClass} style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
               Sobre
-            </Link>
-            <Link href="/acoes" className="text-sm font-medium text-foreground">
+            </NavLink>
+            <NavLink to="/acoes" className={navClass} style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
               Ações
-            </Link>
-            <NavLink to="/forum" className="text-sm font-medium text-foreground" style={{ textDecoration: 'none' }}>
+            </NavLink>
+            <NavLink to="/forum" className={navClass} style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
               Fórum
             </NavLink>
-            <Link href="/indicadores" className="text-sm font-medium text-foreground">
+            <NavLink to="/indicadores" className={navClass} style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
               Indicadores
-            </Link>
-            <Link href="/mapa" className="text-sm font-medium text-foreground">
+            </NavLink>
+            <NavLink to="/mapa" className={navClass} style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
               Mapa
-            </Link>
-            <NavLink to="/metodologia" className="text-sm font-medium text-foreground" style={{ textDecoration: 'none' }}>
+            </NavLink>
+            <NavLink to="/metodologia" className={navClass} style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
               Metodologia
             </NavLink>
-            <NavLink to="/recursos" className="text-sm font-medium text-foreground" style={{ textDecoration: 'none' }}>
+            <NavLink to="/recursos" className={navClass} style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
               Recursos
             </NavLink>
-            <Link href="/noticias" className="text-sm font-medium text-foreground">
+            <NavLink to="/noticias" className={navClass} style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
               Notícias
-            </Link>
+            </NavLink>
             <div className="flex flex-col gap-2 pt-4">
               {user ? (
                 <>

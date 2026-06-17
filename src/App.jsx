@@ -8,7 +8,7 @@ import { AuthProvider } from "./contexts/AuthContext"
 import MapaPage from "./pages/Mapa"
 import AcaoDetalhesPage from "./pages/AcaoDetalhes"
 import CadastroAcoesPage from "./pages/CadastroAcoes"
-// import IndicadoresPage from "./pages/Indicadores"
+import IndicadoresPage from "./pages/Indicadores"
 import NoticiasPage from "./pages/Noticias"
 import ForumPage from "./pages/Forum"
 import RecursosPage from "./pages/Recursos"
@@ -32,8 +32,8 @@ function App() {
         <Route path="/recursos" element={<RecursosPage />} />
         <Route path="/metodologia" element={<MetodologiaPage />} />
         <Route path="/mapa" element={<MapaPage />} />
-        {/* <Route path="/nova-acao" element={<NovaAcaoPage />} />
         <Route path="/indicadores" element={<IndicadoresPage />} />
+        {/* <Route path="/nova-acao" element={<NovaAcaoPage />} />
         <Route path="/admin" element={<AdminPage />} /> */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
