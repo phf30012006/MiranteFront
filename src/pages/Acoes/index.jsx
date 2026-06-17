@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react"
 import { Header } from "../../components/header"
 import { Footer } from "../../components/footer"
-import { Box, Button, Card, CardContent, Badge } from "@mui/material"
+import { Card, Badge } from "@mui/material"
 import { NavLink } from "react-router-dom"
 import { MapPin, Calendar, ExternalLink, Leaf, Droplet, Wind, Recycle, Plus } from "lucide-react"
 import { getAcoes } from "./actions"
 import FilterPanel from "../../components/FilterPanel"
+import Pagination from "../../components/Pagination"
 
 const odsColors = {
   1: "#E5243B",
@@ -48,6 +49,8 @@ const iconMap = {
 export default function AcoesPage() {
   const [actions, setActions] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 9
   const [filters, setFilters] = useState({
     nome: "",
     municipio: "",
@@ -72,10 +75,16 @@ export default function AcoesPage() {
 
   const handleFilter = (newFilters) => {
     setFilters(newFilters)
+    setCurrentPage(1)
   }
 
   const handleClearFilter = (clearedFilters) => {
     setFilters(clearedFilters)
+    setCurrentPage(1)
+  }
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page)
   }
 
   const filteredActions = actions.filter((action) => {
@@ -111,6 +120,10 @@ export default function AcoesPage() {
 
     return true
   })
+
+  const totalPages = Math.ceil(filteredActions.length / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const paginatedActions = filteredActions.slice(startIndex, startIndex + itemsPerPage)
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -154,7 +167,7 @@ export default function AcoesPage() {
                 Nenhuma ação encontrada.
               </div>
             ) : (
-              filteredActions.map((action) => {
+              paginatedActions.map((action) => {
                 const temaObj = action.temas?.[0]
                 const themeName = typeof temaObj === 'object' ? temaObj?.nome : temaObj || "Meio Ambiente"
                 const Icon = iconMap[themeName] || Leaf
@@ -215,6 +228,10 @@ export default function AcoesPage() {
               })
             )}
           </div>
+
+          {!isLoading && (
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+          )}
         </div>
       </main>
 
