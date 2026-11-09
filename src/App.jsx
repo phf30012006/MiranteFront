@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react"
 import { Routes, Route } from "react-router-dom"
 import HomePage from "./pages/Home"
 import CadastroPage from "./pages/Cadastro"
@@ -16,6 +17,8 @@ import MetodologiaPage from "./pages/Metodologia"
 import SobrePage from "./pages/Sobre"
 // import AdminPage from "./pages/Admin"
 
+const AtoresPage = lazy(() => import("./pages/Atores"))
+
 function App() {
   return (
     <AuthProvider>
@@ -27,6 +30,7 @@ function App() {
         <Route path="/acoes" element={<AcoesPage />} />
         <Route path="/cadastro-acoes" element={<CadastroAcoesPage />} />
         <Route path="/acoes/:id" element={<AcaoDetalhesPage />} />
+        <Route path="/atores" element={<Suspense fallback={null}><AtoresPage /></Suspense>} />
         <Route path="/noticias" element={<NoticiasPage />} />
         <Route path="/forum" element={<ForumPage />} />
         <Route path="/recursos" element={<RecursosPage />} />

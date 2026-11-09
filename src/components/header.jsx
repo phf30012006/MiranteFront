@@ -32,12 +32,15 @@ export function Header() {
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-5 md:flex">
           <NavLink to="/sobre" className={navClass} style={{ textDecoration:"none" }}>
             Sobre
           </NavLink>
           <NavLink to="/acoes" className={navClass}>
             Ações
+          </NavLink>
+          <NavLink to="/atores" className={navClass}>
+            Atores
           </NavLink>
           <NavLink to="/forum" className={navClass}>
             Fórum
@@ -95,6 +98,9 @@ export function Header() {
             </NavLink>
             <NavLink to="/acoes" className={navClass} style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
               Ações
+            </NavLink>
+            <NavLink to="/atores" className={navClass} style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
+              Atores
             </NavLink>
             <NavLink to="/forum" className={navClass} style={{ textDecoration: "none" }} onClick={() => setMobileMenuOpen(false)}>
               Fórum

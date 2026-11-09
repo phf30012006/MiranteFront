@@ -35,6 +35,11 @@ export function Footer() {
                 </NavLink>
               </li>
               <li>
+                <NavLink to="/atores" className="text-white/80 transition-colors hover:text-primary">
+                  Atores
+                </NavLink>
+              </li>
+              <li>
                 <NavLink to="/indicadores" className="text-white/80 transition-colors hover:text-primary">
                   Indicadores
                 </NavLink>
